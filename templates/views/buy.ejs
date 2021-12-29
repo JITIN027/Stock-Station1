@@ -1,0 +1,25 @@
+<%- include('../partials/header.ejs') -%>
+<div class="card pricing-card">
+  <div class="card-body">
+<h1 class="indice-name"><%= symbol %></h1>
+<h3 class="indice-characteristics">OPEN: <%= open %></h3>
+<h3 class="indice-characteristics">HIGH: <%= high %></h3>
+<h3 class="indice-characteristics">LOW: <%= low %></h3>
+<h3 class="indice-characteristics">CURRENT/LTP: <%= current %></h3>
+<form class="" action="/buy" method="post">
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">QUANTITY</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="quantity">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary" name="button">CONFIRM BUY</button>
+</form>
+</div>
+</div>
+
+<%- include('../partials/footer.ejs') -%>

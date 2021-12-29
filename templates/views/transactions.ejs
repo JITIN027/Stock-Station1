@@ -1,0 +1,10 @@
+<%- include('../partials/header.ejs') -%>
+<h1>Transactions</h1>
+<% for(let i=0;i<transactions.length;i++) { %>
+  <h2>transaction <%= i+1 %></h2>
+  <h2>Stock/equity: <%= transactions[i].symbol %></h2>
+  <h2>Quantity Purchased: <%= transactions[i].quantity %></h2>
+  <h2>Price of Purchase: <%= transactions[i].current %></h2>
+  <h2>Price Paid: <%= transactions[i].price_paid %></h2>
+  <% } %>
+<%- include('../partials/footer.ejs') -%>

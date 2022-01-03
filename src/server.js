@@ -31,6 +31,10 @@ var low=0;
 var current=0;
 var transactions=[];
 var quantity=0;
+var regiSchema='';
+var email='';
+var user='';
+var stock_transaction='';
 app.get("/aboutus",function(req,res){
     res.render("aboutus");
   });
@@ -70,7 +74,16 @@ app.get("/buy",function(req,res){
   });
 app.post("/buy",function(req,res){
     quantity=req.body.quantity;
+    const calc=current*quantity;
     const price_paid=current*quantity;
+    stock_transaction={
+      transaction_number:30,
+      stock_name:symbol,
+      quantity:quantity,
+      buying_price:current,
+     total_price:calc
+   };
+    //Register.updateOne({email:user.email},{transactions:stock_tr})
     transaction={
       symbol:symbol,
       quantity:quantity,
@@ -84,8 +97,8 @@ app.post("/buy",function(req,res){
 app.get("/insights",function(req,res){
     res.render("insights");
   });
-app.get("/transactions",function(req,res){
-    res.render("transactions",{transactions:transactions});
+app.get("/transactions",async function(req,res){
+    res.render("transactions",{transactions:user.transactions});
   });
 
 app.post("/register",async(req,res)=>{
@@ -94,7 +107,7 @@ app.post("/register",async(req,res)=>{
         const cpassword=req.body.confirmpassword;
 
         if(password==cpassword){
-            const regiSchema=new Register({
+            regiSchema=new Register({
                 firstname:req.body.firstname,
                 lastname:req.body.lastname,
                 email:req.body.email,
@@ -102,7 +115,7 @@ app.post("/register",async(req,res)=>{
                 password:password,
                 confirmpassword:cpassword,
                 phoneno:req.body.phoneno
-                
+
             })
             const registered=await regiSchema.save();
             res.render('login');
@@ -121,17 +134,17 @@ app.post("/register",async(req,res)=>{
 
 app.post('/login',async(req,res)=>{
     try{
-        const email=req.body.email;
+        email=req.body.email;
         const password=req.body.password;
 
-       const useremail=await Register.findOne({email:email});
-       if(password==useremail.password){
-           res.status(201).render('index');
+       user=await Register.findOne({email:email});
+       if(password==user.password){
+           res.status(201).render('aboutus');
        }else{
            res.send("invalid login details");
        }
 
-        
+
 
     }catch(err){
         res.status(400).send("invalid email");
@@ -144,10 +157,21 @@ app.get("/about",(req,res)=>{
 app.get("/sell",function(req,res){
     res.render("sell");
   });
+app.get("/profile",async function(req,res){
+  Register.updateOne({email:user.email},{transactions:[stock_transaction]},function(err,docs){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(docs);
+    }
+  }
+);
+
+
+  res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions});
+});
+
 app.listen(port,()=>{
     console.log(`server is running on ${port}`);
 })
-
-
-
-

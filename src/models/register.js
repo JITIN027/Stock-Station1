@@ -32,6 +32,10 @@ const registerSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    altcoins:{
+      type:Number,
+      required:true
+    }
 })
 registerSchema.pre("save",async function(next){
     this.password=bcrypt.hash(this.password,10);
@@ -61,4 +65,40 @@ const transSchema=new mongoose.Schema({
   }
 })
 const Trans=new mongoose.model("trans",transSchema);
-module.exports={ Register , Trans };
+const holdingSchema=new mongoose.Schema({
+  hold_email:{
+    type:String
+  },
+  CIPLA:{
+    type:Number
+  },
+  IRCTC:{
+    type:Number
+  },
+  ITC:{
+    type:Number
+  },
+  TCS:{
+    type:Number
+  },
+  TITAN:{
+    type:Number
+  },
+  HDFC:{
+    type:Number
+  },
+  WIPRO:{
+    type:Number
+  },
+  MARUTI:{
+    type:Number
+  },
+  ASIANPAINT:{
+    type:Number
+  },
+  BRITANNIA:{
+    type:Number
+  }
+})
+const Holdings=new mongoose.model('holding',holdingSchema);
+module.exports={ Register , Trans , Holdings};

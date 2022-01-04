@@ -8,7 +8,7 @@ require('./db/conn');
 const _=require("lodash");
 const ejs=require("ejs");
 const stock=require(__dirname+"/stock.js");
-const { Register , Trans }=require('./models/register');
+const { Register , Trans , Holdings}=require('./models/register');
 
 const port=process.env.PORT || 3000;
 
@@ -29,7 +29,6 @@ var open=0;
 var high=0;
 var low=0;
 var current=0;
-var transactions=[];
 var quantity=0;
 var regiSchema='';
 var email='';
@@ -75,21 +74,10 @@ app.get("/buy",function(req,res){
 app.post("/buy",async function(req,res){
     quantity=req.body.quantity;
     const calc=current*quantity;
-    const price_paid=current*quantity;
-    stock_transaction={
-      transaction_number:30,
-      stock_name:symbol,
-      quantity:quantity,
-      buying_price:current,
-     total_price:calc
-   };
-    //Register.updateOne({email:user.email},{transactions:stock_tr})
-    transaction={
-      symbol:symbol,
-      quantity:quantity,
-      current:current,
-      price_paid:price_paid
-    };
+    if(calc>user.altcoins){
+      alert("insufficient balance")
+    }
+    else{
     transSchema=new Trans({
       user_email:user.email,
       stock_name:symbol,
@@ -99,16 +87,35 @@ app.post("/buy",async function(req,res){
       total_price:calc
     })
     const trans=await transSchema.save();
-    transactions.push(transaction);
-    console.log(transactions);
-    res.redirect("index");
+    const new_balance=user.altcoins-calc;
+    user.altcoins=new_balance;
+    Register.updateOne({email:user.email},{altcoins:new_balance},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+    const temp=await Holdings.findOne({hold_email:user.email});
+    //console.log(`${symbol}`);
+    //const new_quantity=quantity+temp.`${symbol}`;
+    //Holdings.updateOne({hold_email:user.email},{:3},function(err,docs){
+      //if(err){
+        //console.log(err);
+    //  }
+    //  else{
+      //  console.log(docs);
+    //  }
+    //});
+    res.redirect("index");}
   });
 app.get("/insights",function(req,res){
     res.render("insights");
   });
 app.get("/transactions",async function(req,res){
-
-    const all=await Trans.find({email:user.email});
+    console.log(user.email);
+    const all=await Trans.find({user_email:user.email});
     console.log(all);
       res.render("transactions",{transactions:all});
   });
@@ -126,10 +133,26 @@ app.post("/register",async(req,res)=>{
                 gender:req.body.gender,
                 password:password,
                 confirmpassword:cpassword,
-                phoneno:req.body.phoneno
+                phoneno:req.body.phoneno,
+                altcoins:100000
 
             })
             const registered=await regiSchema.save();
+            holdSchema=new Holdings({
+              hold_email:req.body.email,
+              CIPLA:0,
+              IRCTC:0,
+              ITC:0,
+              TCS:0,
+              TITAN:0,
+              HDFC:0,
+              WIPRO:0,
+              MARUTI:0,
+              ASIANPAINT:0,
+              BRITANNIA:0
+
+            })
+            const holdings=await holdSchema.save();
             res.render('login');
 
         }
@@ -170,18 +193,8 @@ app.get("/sell",function(req,res){
     res.render("sell");
   });
 app.get("/profile",async function(req,res){
-  Register.updateOne({email:user.email},{transactions:[stock_transaction]},function(err,docs){
-    if(err){
-      console.log(err);
-    }
-    else{
-      console.log(docs);
-    }
-  }
-);
 
-
-  res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions});
+  res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions,altcoins:user.altcoins});
 });
 
 app.listen(port,()=>{

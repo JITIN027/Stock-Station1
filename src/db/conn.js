@@ -5,7 +5,7 @@ mongoose.connect("mongodb+srv://jitin:jitin027@cluster0.slipv.mongodb.net/regist
     useUnifiedTopology:true,
 
 }).then(()=>{
-    console.log(`conn is successful`);
+    console.log(` register conn is successful`);
 }).catch((err)=>{
     console.log(err);
 })

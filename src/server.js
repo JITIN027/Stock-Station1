@@ -8,7 +8,7 @@ require('./db/conn');
 const _=require("lodash");
 const ejs=require("ejs");
 const stock=require(__dirname+"/stock.js");
-const Register=require('./models/register');
+const { Register , Trans }=require('./models/register');
 
 const port=process.env.PORT || 3000;
 
@@ -72,7 +72,7 @@ app.get("/buy",function(req,res){
       current:current
     });
   });
-app.post("/buy",function(req,res){
+app.post("/buy",async function(req,res){
     quantity=req.body.quantity;
     const calc=current*quantity;
     const price_paid=current*quantity;
@@ -90,6 +90,15 @@ app.post("/buy",function(req,res){
       current:current,
       price_paid:price_paid
     };
+    transSchema=new Trans({
+      user_email:user.email,
+      stock_name:symbol,
+      transaction_price:current,
+      quantity:quantity,
+      type_of_transaction:"buy",
+      total_price:calc
+    })
+    const trans=await transSchema.save();
     transactions.push(transaction);
     console.log(transactions);
     res.redirect("index");
@@ -98,7 +107,10 @@ app.get("/insights",function(req,res){
     res.render("insights");
   });
 app.get("/transactions",async function(req,res){
-    res.render("transactions",{transactions:user.transactions});
+
+    const all=await Trans.find({email:user.email});
+    console.log(all);
+      res.render("transactions",{transactions:all});
   });
 
 app.post("/register",async(req,res)=>{

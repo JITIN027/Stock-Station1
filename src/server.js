@@ -75,7 +75,7 @@ app.post("/buy",async function(req,res){
     quantity=req.body.quantity;
     const calc=current*quantity;
     if(calc>user.altcoins){
-      alert("insufficient balance")
+      res.send(("insufficient balance"));
     }
     else{
     transSchema=new Trans({
@@ -97,17 +97,130 @@ app.post("/buy",async function(req,res){
         console.log(docs);
       }
     });
-    const temp=await Holdings.findOne({hold_email:user.email});
-    //console.log(`${symbol}`);
-    //const new_quantity=quantity+temp.`${symbol}`;
-    //Holdings.updateOne({hold_email:user.email},{:3},function(err,docs){
-      //if(err){
-        //console.log(err);
-    //  }
-    //  else{
-      //  console.log(docs);
-    //  }
-    //});
+    let temp_update_holding ='';
+    let existing_quantity=0;
+    let new_quantity=0;
+    if(symbol==="CIPLA"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.CIPLA;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{CIPLA:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="IRCTC"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.IRCTC;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{IRCTC:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="ITC"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.ITC;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{ITC:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="TCS"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.TCS;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{TCS:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="TITAN"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.TITAN;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{TITAN:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="HDFC"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.HDFC;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{HDFC:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="WIPRO"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.WIPRO;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{WIPRO:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="MARUTI"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.MARUTI;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{MARUTI:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="ASIANPAINT"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.ASIANPAINT;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{ASIANPAINT:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    } else if(symbol==="BRITANNIA"){
+       temp_update_holding = await Holdings.findOne({hold_email:user.email});
+       existing_quantity=temp_update_holding.BRITANNIA;
+       new_quantity=parseInt(existing_quantity)+parseInt(quantity);
+      Holdings.updateOne({hold_email:user.email},{BRITANNIA:new_quantity},function(err,docs){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(docs);
+        }
+      });
+    }
     res.redirect("index");}
   });
 app.get("/insights",function(req,res){
@@ -189,12 +302,195 @@ app.post('/login',async(req,res)=>{
 app.get("/about",(req,res)=>{
     res.render('about');
 })
-app.get("/sell",function(req,res){
-    res.render("sell");
+app.get("/sell",async function(req,res){
+  let sell_available_quantity=0;
+  const user_holdings=await Holdings.findOne({hold_email:user.email});
+  console.log(user_holdings);
+  if(symbol==="CIPLA"){
+    sell_available_quantity=user_holdings.CIPLA;
+  } else if(symbol==="IRCTC"){
+    sell_available_quantity=user_holdings.IRCTC;
+  } else if(symbol==="ITC"){
+    sell_available_quantity=user_holdings.ITC;
+  }
+  else if(symbol==="TCS"){
+    sell_available_quantity=user_holdings.TCS;
+  } else if(symbol==="TITAN"){
+    sell_available_quantity=user_holdings.TITAN;
+  } else if(symbol==="HDFC"){
+    sell_available_quantity=user_holdings.HDFC;
+  } else if(symbol==="WIPRO"){
+    sell_available_quantity=user_holdings.WIPRO;
+  } else if(symbol==="MARUTI"){
+    sell_available_quantity=user_holdings.MARUTI;
+  } else if(symbol==="ASIANPAINT"){
+    sell_available_quantity=user_holdings.ASIANPAINT;
+  } else if(symbol==="BRITANNIA"){
+    sell_available_quantity=user_holdings.BRITANNIA;
+  }
+  console.log(sell_available_quantity);
+  res.render("sell",{
+    symbol:symbol,
+    open:open,
+    high:high,
+    low:low,
+    current:current,
+    sell_available_quantity:sell_available_quantity
+  });;
   });
 app.get("/profile",async function(req,res){
+  const uhold=await Holdings.findOne({hold_email:user.email});
+  console.log(uhold);
+  res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions,altcoins:user.altcoins,uhold:uhold});
+});
 
-  res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions,altcoins:user.altcoins});
+app.post("/sell", async function(req,res){
+  const sold_quantity=req.body.sell_quantity;
+  const calc=sold_quantity*current;
+  transSchema=new Trans({
+    user_email:user.email,
+    stock_name:symbol,
+    transaction_price:current,
+    quantity:sold_quantity,
+    type_of_transaction:"sell",
+    total_price:calc
+  })
+  const trans=await transSchema.save();
+  const new_balance=user.altcoins+calc;
+  user.altcoins=new_balance;
+  Register.updateOne({email:user.email},{altcoins:new_balance},function(err,docs){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(docs);
+    }
+  });
+  let temp_update_holding ='';
+  let existing_quantity=0;
+  let new_quantity=0;
+  if(symbol==="CIPLA"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.CIPLA;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{CIPLA:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="IRCTC"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.IRCTC;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{IRCTC:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="ITC"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.ITC;
+    new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{ITC:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="TCS"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.TCS;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{TCS:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="TITAN"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.TITAN;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{TITAN:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="HDFC"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.HDFC;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{HDFC:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="WIPRO"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.WIPRO;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{WIPRO:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="MARUTI"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.MARUTI;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{MARUTI:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="ASIANPAINT"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.ASIANPAINT;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{ASIANPAINT:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  } else if(symbol==="BRITANNIA"){
+     temp_update_holding = await Holdings.findOne({hold_email:user.email});
+     existing_quantity=temp_update_holding.BRITANNIA;
+     new_quantity=parseInt(existing_quantity)-parseInt(sold_quantity);
+    Holdings.updateOne({hold_email:user.email},{BRITANNIA:new_quantity},function(err,docs){
+      if(err){
+        console.log(err);
+      }
+      else{
+        console.log(docs);
+      }
+    });
+  }
+res.redirect("index");
 });
 
 app.listen(port,()=>{

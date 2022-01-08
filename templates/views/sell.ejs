@@ -1,3 +1,29 @@
 <%- include('../partials/header.ejs') -%>
-<h1>SELL PAGE</h1>
+<div class="card pricing-card">
+  <div class="card-body">
+<h1 class="indice-name"><%= symbol %></h1>
+<h3 class="indice-characteristics">OPEN: <%= open %></h3>
+<h3 class="indice-characteristics">HIGH: <%= high %></h3>
+<h3 class="indice-characteristics">LOW: <%= low %></h3>
+<h3 class="indice-characteristics">CURRENT/LTP: <%= current %></h3>
+<% if(sell_available_quantity===0){ %>
+  <p>
+    Cant sell as dont hold any <%= symbol %>
+    </p>
+  <% } else { %>
+  <form class="" action="/sell" method="post">
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">QUANTITY</label>
+      <select class="form-control" id="exampleFormControlSelect1" name="sell_quantity">
+        <% for(var i=1;i<=sell_available_quantity;i++){ %>
+        <option><%= i %></option>
+        <% } %>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" name="button">CONFIRM SELL</button>
+  </form>
+  <% } %>
+</div>
+</div>
+
 <%- include('../partials/footer.ejs') -%>

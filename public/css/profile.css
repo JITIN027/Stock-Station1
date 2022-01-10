@@ -1,0 +1,26 @@
+.gradient-custom {
+    
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  
+    
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  
+    
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+  }
+
+  .card{
+    
+    margin: 0;
+    
+    border: black;
+    border-radius: 0;
+    color:rgba(0,0,0,1);
+    
+    
+    box-shadow: 0 0 21px rgba(0,0,0,.27);}
+
+    .card-header{
+        background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+        color: white;
+    }

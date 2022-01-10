@@ -1,0 +1,15 @@
+.card-header{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    color: white;
+}
+.card{
+    
+    margin: 0;
+    padding: 1.7rem 1.2rem;
+    border: black;
+    border-radius: 0;
+    color:rgba(0,0,0,1);
+    letter-spacing: .05rem;
+    
+    box-shadow: 0 0 21px rgba(0,0,0,.27);}
+    

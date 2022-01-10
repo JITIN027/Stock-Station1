@@ -1,4 +1,72 @@
-<%- include('../partials/header.ejs') -%>
-<h1>Transactions</h1>
-<h1><%= transactions %></h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/transaction.css">
+</head>
+<body>
+    <%- include('../partials/header.ejs') -%>
+<div class="p-10 bg-surface-primary">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h3>Transactions</h3>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-nowrap">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Stock Name</th>
+                            <th scope="col">Stock price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Type</th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <% for(var transaction of transactions) { %>
+                            <tr>
+                            <td data-label="stock_name"> <span><%=transaction.stock_name %></span> </td>
+                            <td data-label="transaction_price"><span><%=transaction.transaction_price%></span></td>
+                            <td data-label="quantity"> <span><%=transaction.quantity%></span> </td>
+                            <td data-label="total_price"> <span><%=transaction.total_price %></span> </td>
+                            <td data-label="type_of_transaction"><span><%=transaction.type_of_transaction %></span> </td>
+                            
+                                <div class="dropdown"> <a class="text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="bi bi-three-dots-vertical"></i> </a>
+                                    <div class="dropdown-menu dropdown-menu-end"> <a href="#!" class="dropdown-item"> Action </a> <a href="#!" class="dropdown-item"> Another action </a> <a href="#!" class="dropdown-item"> Something else here </a> </div>
+                                </div>
+                            </td>
+                        </tr><% } %>
+                        
+                        
+                        
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <%- include('../partials/footer.ejs') -%>
+</body>
+</html>
+<!--<%- include('../partials/header.ejs') -%>
+<h1>Transactions</h1>
+<ul><% for(var transaction of transactions) { %>
+    <li><%=transaction.stock_name %></li>
+    <li><%=transaction.transaction_price%></li>
+    <li><%=transaction.quantity%></li>
+    <li><%=transaction.type_of_transaction %></li>
+<li><%=transaction.total_price %></li>
+<% } %>
+</ul>
+
+

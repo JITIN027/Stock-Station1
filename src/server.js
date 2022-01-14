@@ -224,7 +224,28 @@ app.post("/buy",async function(req,res){
     res.redirect("index");}
   });
 app.get("/insights",function(req,res){
-    res.render("insights");
+  let news='';
+  var axios = require("axios").default;
+
+var options = {
+  method: 'GET',
+  url: 'https://google-news.p.rapidapi.com/v1/topic_headlines',
+  params: {lang: 'en', country: 'US', topic: 'BUSINESS'},
+  headers: {
+    'x-rapidapi-host': 'google-news.p.rapidapi.com',
+    'x-rapidapi-key': '2c10a421e6msh912b4fa699d8b38p11b31djsn5560fcad7258'
+  }
+};
+
+axios.request(options).then(function (response) {
+  news=response.data.articles;
+  console.log(news[0]);
+  res.render("insights",{news:news});
+
+}).catch(function (error) {
+	console.error(error);
+});
+  res.render("insights",{news:news});
   });
 app.get("/transactions",async function(req,res){
     console.log(user.email);
@@ -343,7 +364,66 @@ app.get("/profile",async function(req,res){
   console.log(uhold);
   res.render('profile',{name:user.firstname,lname:user.lastname,email:user.email,phoneno:user.phoneno,transactions:user.transactions,altcoins:user.altcoins,uhold:uhold});
 });
+app.post("/profile",async function(req,res){
+  let portfolio=0
+  const phold=await Holdings.findOne({hold_email:user.email});
+  const k=stock.getPrice('CIPLA');
+  k.then(data => {
+    const cipla_price=data.priceInfo.lastPrice;
+    portfolio=user.altcoins+(phold.CIPLA*cipla_price);
+    const l=stock.getPrice("ITC");
+    l.then(data => {
+      const itc_price=data.priceInfo.lastPrice;
+      portfolio=portfolio+(phold.ITC*itc_price);
+      const m=stock.getPrice("IRCTC");
+      m.then(data => {
+        const irctc_price=data.priceInfo.lastPrice;
+        portfolio=portfolio+(phold.IRCTC*irctc_price);
+        const n=stock.getPrice("TITAN");
+        n.then(data => {
+          const titan_price=data.priceInfo.lastPrice;
+          portfolio=portfolio+(phold.TITAN*titan_price);
+          const o=stock.getPrice("HDFC");
+          o.then(data => {
+            const hdfc_price=data.priceInfo.lastPrice;
+            portfolio=portfolio+(phold.HDFC*hdfc_price);
+            const p=stock.getPrice("TCS");
+            p.then(data => {
+              const tcs_price=data.priceInfo.lastPrice;
+              portfolio=portfolio+(phold.TCS*tcs_price);
+              q=stock.getPrice("WIPRO");
+              q.then(data => {
+                const wipro_price=data.priceInfo.lastPrice;
+                portfolio=portfolio+(phold.WIPRO*wipro_price);
+                r=stock.getPrice("MARUTI");
+                r.then(data => {
+                  const maruti_price=data.priceInfo.lastPrice;
+                  portfolio=portfolio+(phold.MARUTI*maruti_price);
+                  s=stock.getPrice("ASIANPAINT");
+                  s.then(data => {
+                    const asianpaint_price=data.priceInfo.lastPrice;
+                    portfolio=portfolio+(phold.ASIANPAINT*asianpaint_price);
+                    t=stock.getPrice("BRITANNIA");
+                    t.then(data => {
+                      const britannia_price=data.priceInfo.lastPrice;
+                      portfolio=portfolio+(phold.BRITANNIA*britannia_price);
+                      console.log(portfolio);
+                      res.render("portfolio",{portfolio:portfolio});
+                    });
+                  });
+                });
+              });
+            });
+          });
 
+        });
+
+      });
+
+    });
+
+  });
+});
 app.post("/sell", async function(req,res){
   const sold_quantity=req.body.sell_quantity;
   const calc=sold_quantity*current;

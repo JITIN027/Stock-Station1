@@ -14,7 +14,7 @@
           <div class="card mb-3" style="border-radius: .5rem;">
             <div class="row g-0">
               <div class="col-md-4 gradient-custom text-center text-white" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                
+
                 <img
                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                   alt="Avatar"
@@ -22,7 +22,7 @@
                   style="width: 80px;"
                 />
                 <h5><%= name %> <%= lname %></h5>
-                
+
                 <i class="far fa-edit mb-5"></i>
               </div>
               <div class="col-md-8">
@@ -41,10 +41,10 @@
                   </div>
                   <h6>Altcoins:</h6>
                   <button class="btn-primary"><h6><%= altcoins %></h6></button>
-                   
-                    
+
+
                   </div>
-                  
+
                 </div>
               </div>
             </div>
@@ -53,6 +53,10 @@
       </div>
     </div>
   </section>
+  <form class="" action="/profile" method="post">
+    <button type="submit" class="btn btn-primary" name="button">VIEW PORTFOLIO</button>
+  </form>
+
   <div class="p-10 bg-surface-primary">
     <div class="container justify-content-right">
         <div class="card">
@@ -65,18 +69,18 @@
                     <tr>
                     <th scope="col">Stock Name</th>
                     <th scope="col">Quantity</th>
-                    
-                    
+
+
                     <th></th>
                 </tr></thead>
                     <tbody>
-                        
-                            
+
+
                             <tr>
                             <td> <span><h5>CIPLA</h5></span> </td>
                             <td><span><h5><%= uhold.CIPLA %></h5></span></td>
                             </tr>
-                            
+
                             <tr>
                                 <td> <span><h5>IRCTC </h5></span> </td>
                                 <td><span><h5><%= uhold.IRCTC %></h5></span></td>
@@ -113,18 +117,18 @@
                                 <td> <span><h5>BRITANNIA</h5></span> </td>
                                 <td><span><h5><%= uhold.BRITANNIA %></h5></span></td>
                             </tr>
-                            
-                            
-                            
+
+
+
                                 <div class="dropdown"> <a class="text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="bi bi-three-dots-vertical"></i> </a>
                                     <div class="dropdown-menu dropdown-menu-end"> <a href="#!" class="dropdown-item"> Action </a> <a href="#!" class="dropdown-item"> Another action </a> <a href="#!" class="dropdown-item"> Something else here </a> </div>
                                 </div>
                             </td>
                         </tr>
-                        
-                        
-                        
-                       
+
+
+
+
                     </tbody>
                 </table>
             </div>
@@ -132,12 +136,12 @@
     </div>
 </div>
 
-    
+
 
 
 
 <%- include('../partials/footer.ejs') -%>
 
-   
+
 </body>
 </html>

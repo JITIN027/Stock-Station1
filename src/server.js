@@ -223,30 +223,7 @@ app.post("/buy",async function(req,res){
     }
     res.redirect("index");}
   });
-app.get("/insights",function(req,res){
-  let news='';
-  var axios = require("axios").default;
 
-var options = {
-  method: 'GET',
-  url: 'https://google-news.p.rapidapi.com/v1/topic_headlines',
-  params: {lang: 'en', country: 'US', topic: 'BUSINESS'},
-  headers: {
-    'x-rapidapi-host': 'google-news.p.rapidapi.com',
-    'x-rapidapi-key': '2c10a421e6msh912b4fa699d8b38p11b31djsn5560fcad7258'
-  }
-};
-
-axios.request(options).then(function (response) {
-  news=response.data.articles;
-  console.log(news[0]);
-  res.render("insights",{news:news});
-
-}).catch(function (error) {
-	console.error(error);
-});
-  res.render("insights",{news:news});
-  });
 app.get("/transactions",async function(req,res){
     console.log(user.email);
     const all=await Trans.find({user_email:user.email});

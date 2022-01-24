@@ -91,3 +91,53 @@ footer{
   background: -webkit-linear-gradient(left, #3931af, #00c6ff);
   
 }
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -40%);
+  font-size:70px;
+  color: -webkit-linear-gradient(left, #3931af, #00c6ff);s
+}
+.container2 {
+  position: relative;
+  text-align: center;
+  color: black;
+  padding-left: 0px;
+  margin-left:0px;
+}
+.abc{
+  
+  width: 1500px; 
+  height:600px;
+  
+}
+.card-block{
+  padding-left: 20px;
+  padding-right:20px;
+}
+.col-md-3{
+  margin-left: 120px;
+  margin-right:120px;
+  margin-top:10px;
+  margin-bottom:50px;
+}
+
+.image1{
+  margin-left:80px;
+  margin-bottom:50px;
+  margin-top:50px;
+ 
+}
+
+.pop{
+  font-family: sans-serif;
+  margin-left:460px;
+  
+}
+
+.feature{
+  font-family: sans-serif;
+  margin-left:570px;
+  margin-top:50px;
+}

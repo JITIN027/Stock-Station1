@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         
-                            <% for(var transaction of transactions) { %>
+                            <% transactions.reverse().forEach(function(transaction) { %>
                             <tr>
                             <td data-label="stock_name"> <span><%=transaction.stock_name %></span> </td>
                             <td data-label="transaction_price"><span><%=transaction.transaction_price%></span></td>
@@ -42,7 +42,7 @@
                                     <div class="dropdown-menu dropdown-menu-end"> <a href="#!" class="dropdown-item"> Action </a> <a href="#!" class="dropdown-item"> Another action </a> <a href="#!" class="dropdown-item"> Something else here </a> </div>
                                 </div>
                             </td>
-                        </tr><% } %>
+                        </tr><%  }) %>
                         
                         
                         

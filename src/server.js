@@ -297,8 +297,8 @@ app.post('/login',async(req,res)=>{
     }
 })
 
-app.get("/about",(req,res)=>{
-    res.render('about');
+app.get("/logout",(req,res)=>{
+    res.render('register');
 })
 app.get("/sell",async function(req,res){
   let sell_available_quantity=0;
